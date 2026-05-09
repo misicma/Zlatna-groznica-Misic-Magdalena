@@ -43,7 +43,7 @@ public class Sluice extends Tool {
         }
         
         System.out.println("With sluice you sallary is " + sallary);
-        System.out.println("Old durability was " + oldDurability+ " and newest one is "+ durability + " ,decreased for "+ descrease + "%");
+        System.out.println("Old durability was " + oldDurability+ " and newest one is "+ durability + " ,decreased for "+ decrease + "%");
     
         return sallary;
     }
