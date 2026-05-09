@@ -52,4 +52,38 @@ public class FortyNiner {
     public void setTools(ArrayList<Tool> tools) {
         this.tools = tools;
     }
+        
+    public int useTools() {
+        int totalSalary = 0;
+        
+        //Go through all tools
+        for(int i=0; i<tools.size(); i++) {
+            Tool t = tools.get(i);
+            
+            //Ako je endurance(snaga), ne moze se raditi
+            if(endurance <= 0) {
+                System.out.println("You are too exhausted! You cannot use tools for this week!");
+                
+                return 0;
+            }
+            
+            int salary = t.useTool();
+            totalSalary += salary;
+            money += salary;
+            
+            //Ako je kolijevka pokvarena ukloni je
+            if (t instanceof Cradle && t.getDurability() <= 0) {
+                tools.remove(i);
+                i--;
+                System.out.println("Cradle is BROKEN!");
+            }
+        }
+        
+        System.out.println("Total week sallary is $ "+ totalSalary);
+        System.out.println("Current state " + money);
+        
+        return totalSalary;
+        
+    }
 }
+
