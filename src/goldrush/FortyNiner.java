@@ -4,7 +4,7 @@
  */
 package goldrush;
 
-import java.util.ArrayList;
+import java.util.ArrayList; //dinamicka lista
 import java.util.Random;
 import java.util.Scanner; //kako bismo dozvolili unos igraca
 
@@ -17,22 +17,29 @@ public class FortyNiner {
     private int money;
     private ArrayList<Tool> tools;
     private Random rnd;
+//    private Object scanner
     
+    //Konstruktor kao def __init__ u Python-u
     public FortyNiner() {
+        //Pocetni uslovi
         this.endurance = 100;
         this.money = 100;
         this.tools = new ArrayList<>();
         this.rnd = new Random();
         
-        tools.add(new Pan());
-        tools.add(new Sluice());
+        tools.add(new Pan()); //dodajemo sito
+        tools.add(new Sluice()); //dodajemo lijevak
+        //Kolijevka se kupuje tokom igre
     }
     
     //Getteri
+    //Oni dozvoljavaju DRUGIM klasama da procitaju vrijednosti
+    //Ali, ne da ih mijenjaju direktno
     public int getEndurance() {
         return endurance;
     }
     
+    //Vraca koliko igrac ima novca
     public int getMoney() {
         return money;
     }
@@ -42,8 +49,9 @@ public class FortyNiner {
     }
     
     //Setteri
+    //Dozvoljavaju DRUGIM klasama da mijenjaju vrijednosti
     public void setEndurance(int endurance) {
-        this.endurance = Math.max(0, Math.min(100,endurance));
+        this.endurance = Math.max(0, Math.min(100,endurance)); //ogranicavamo vrijednost endurance
     }
     
     public void setMoney(int money) {
@@ -81,7 +89,7 @@ public class FortyNiner {
         }
         
         System.out.println("Total week sallary is $ "+ totalSalary);
-        System.out.println("Current state " + money);
+        System.out.println("Current state: " + money);
         
         return totalSalary;
         
@@ -146,8 +154,11 @@ public class FortyNiner {
         //Pronadji lijevak u listi alata
         for(Tool t: tools) {
             if (t instanceof Sluice) {
-                Sluice sluice = (Sluice) t;
-                sluice.repair();
+            //ako je t zapravo dio klase lijevak tj ako je lijevak
+            //koji je jedan element list Tools
+                Sluice sluice = (Sluice) t; //ako je ovo stavi ga u klasu Lijevak
+                //Lijevak se jedino moze popraviti
+                sluice.repair(); //popravi mu trajnost (durability)
                 money -= 100;
                 System.out.println("Fixing of the sluice costs 100$");
                 System.out.println("The remaining money is $ "+money);
@@ -159,7 +170,9 @@ public class FortyNiner {
     }
     
     public void itIsSundayAgain() {
-        System.out.println("\n SUNDAY - day of resting");
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("\n SUNDAY - Day of resting");
         System.out.println("\n Current endurance (power) "+endurance+" %");
         System.out.println("\n Current money: $ "+money);
         System.out.println("\n What you want to do?");
@@ -170,6 +183,26 @@ public class FortyNiner {
         
         //Kasnije cemo unijeti jos jednu metodu
         //Sada se samo ispisuju opcije
+        int choice;
+        choice = scanner.nextInt();
+        
+        switch(choice) {
+            case 1:
+                System.out.println("Chill all day! Nothing happend.");
+                break;
+                
+            case 2:
+                fixSluice();
+                break;
+                
+            case 3:
+                goToTown();
+                break;
+                
+            default:
+                System.out.println("Wrong choice! Stay at home!");
+                break;
+        }
         
     }
     
